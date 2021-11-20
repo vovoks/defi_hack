@@ -8,12 +8,11 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 <div class="container">
-
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4 rounded-circle" src="{% static 'img/logo.jpg' %}"
              alt="" width="72" height="72">
         <h2>Vov's free faucet Ropsten test net</h2>
-        <p class="lead">Min: 0,00001 Eth, Max: 0,3 Eth</p>
+        <p class="lead">Min: 0,0001 Eth, Max: 0,3 Eth</p>
     </div>
     {% bootstrap_messages %}
     <div class="row">
@@ -21,14 +20,22 @@
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Request form: </span>
             </h4>
+
             <form method="post" class="form">
                 {% csrf_token %}
+             <fieldset
+                     {% if service_status == False %}
+                     disabled="disabled"
+                     {% endif %}
+             >
                 {% bootstrap_form form layout='inline' %}
+
                 {% buttons %}
                     <button type="submit" class="btn btn-primary">
                         Submit
                     </button>
                 {% endbuttons %}
+             </fieldset>
             </form>
         </div>
         <div class="col-md-6 order-md-2 mb-4">
