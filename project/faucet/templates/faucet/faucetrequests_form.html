@@ -13,30 +13,42 @@
         <img class="d-block mx-auto mb-4 rounded-circle" src="{% static 'img/logo.jpg' %}"
              alt="" width="72" height="72">
         <h2>Vov's free faucet Ropsten test net</h2>
-        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group
-            has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        <p class="lead">Min: 0,00001 Eth, Max: 0,3 Eth</p>
     </div>
-
-
     {% bootstrap_messages %}
     <div class="row">
-        <form method="post" class="form">
-            {% csrf_token %}
-            {% bootstrap_form form layout='inline' %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">
-                    Submit
-                </button>
-            {% endbuttons %}
-        </form>
-    </div>
-    <div class="row">
+        <div class="col-md-6 order-md-1">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Request form: </span>
+            </h4>
+            <form method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form layout='inline' %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-md-6 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Waiting list</span>
+                <span class="badge badge-secondary badge-pill">{{ queue_size }}</span>
+            </h4>
+            <ul class="list-group mb-3">
+                {% for item in request_list %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">{{ item.address }}</h6>
+                            <small class="text-muted">{{ item.time }}</small>
+                        </div>
+                        <span class="text-muted">{{ item.value }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
 
-        <ul class="list-group">
-            {% for item in request_list %}
-                <li class="list-group-item">{{ item.address }}</li>
-            {% endfor %}
-        </ul>
+        </div>
     </div>
 
 </div>

@@ -12,6 +12,8 @@ class FaucetRequestsView(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['request_list'] = FaucetRequests.objects.filter(state=False)
+        req = FaucetRequests.objects.filter(state=False)
+        context['request_list'] = req
+        context['queue_size'] = len(req)
 
         return context
