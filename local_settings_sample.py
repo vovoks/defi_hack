@@ -1,0 +1,6 @@
+ALLOWED_HOSTS = []
+
+SECRET_KEY = ''
+
+ETHEREUM_ACCOUNTS = []
+

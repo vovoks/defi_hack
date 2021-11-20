@@ -1,3 +1,5 @@
 .idea
 venv
 */migrations
+local_settings.py
+/static

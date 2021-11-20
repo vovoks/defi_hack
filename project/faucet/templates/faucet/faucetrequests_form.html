@@ -1,4 +1,5 @@
 {# Load the tag library #}
+{% load static %}
 {% load bootstrap4 %}
 
 {# Load CSS and JavaScript #}
@@ -6,22 +7,37 @@
 {% bootstrap_javascript jquery='full' %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+<div class="container">
 
-<form method="post" class="form">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            Submit
-        </button>
-    {% endbuttons %}
-</form>
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4 rounded-circle" src="{% static 'img/logo.jpg' %}"
+             alt="" width="72" height="72">
+        <h2>Vov's free faucet Ropsten test net</h2>
+        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group
+            has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+    </div>
 
-<ul class="list-group">
-    {% for item in request_list %}
-        <li class="list-group-item">{{ item.address }}</li>
-    {% endfor %}
-</ul>
 
-{# Read the documentation for more information #}
+    {% bootstrap_messages %}
+    <div class="row">
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form layout='inline' %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>
+    <div class="row">
+
+        <ul class="list-group">
+            {% for item in request_list %}
+                <li class="list-group-item">{{ item.address }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
