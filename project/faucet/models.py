@@ -2,7 +2,6 @@ from django.db import models
 
 
 class FaucetRequests(models.Model):
-    # Мета-дата
     address = models.CharField(verbose_name='Адрес', max_length=40)
     value = models.DecimalField(verbose_name='Значение', max_digits=6, decimal_places=4)
     state = models.BooleanField(verbose_name='Статус', default=False)

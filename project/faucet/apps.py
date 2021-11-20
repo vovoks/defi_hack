@@ -23,7 +23,7 @@ class FaucetConfig(AppConfig):
     name = 'faucet'
 
     def ready(self):
-        self.web3 = init_wallet()
+        self.web3 = "" #init_wallet()
         #import ui.signals
 
 
