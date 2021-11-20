@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from faucet.views import FaucetRequestsView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', FaucetRequestsView.as_view(), name='faucet'),
 ]

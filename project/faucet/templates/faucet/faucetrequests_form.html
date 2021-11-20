@@ -1,0 +1,27 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<form method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    {% endbuttons %}
+</form>
+
+<ul class="list-group">
+    {% for item in request_list %}
+        <li class="list-group-item">{{ item.address }}</li>
+    {% endfor %}
+</ul>
+
+{# Read the documentation for more information #}
