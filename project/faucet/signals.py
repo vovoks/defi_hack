@@ -10,7 +10,7 @@ from faucet.eth import faucet_eth
 @receiver(pre_save, sender=FaucetRequests)
 def send_eth(sender, instance, **kwargs):
     web3 = apps.get_app_config('faucet').web3
-    address = instance.data['address'].lower()
+    address = instance.address.lower()
     instance.address = web3.toChecksumAddress(address)
     faucet_eth(instance)
     instance.state = True
