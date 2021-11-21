@@ -52,9 +52,11 @@ class FaucetRequestsView(SuccessMessageMixin, CreateView):
                     return self.form_invalid(form)
             try:
                 web3 = apps.get_app_config('faucet').web3
-                web3.eth.get_balance(form.data['address'])
-            except:
-                form.add_error(None, "Incorrect address format: {}".format(form.data['address']))
+                if not web3.isAddress(form.data['address']):
+                    form.add_error(None, "Incorrect address format: {}".format(form.data['address']))
+                    return self.form_invalid(form)
+            except Exception as error:
+                form.add_error(None, error)
                 return self.form_invalid(form)
         else:
             form.add_error(None, "Incorrect value, value must be 0,0001 - 10 Eth")

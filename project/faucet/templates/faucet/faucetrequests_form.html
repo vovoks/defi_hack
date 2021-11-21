@@ -5,15 +5,41 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
+<script>
 
-{# Display django.contrib.messages as Bootstrap alerts #}
+    function handleAccountsChanged(accounts) {
+        let currentAccount = null;
+        if (accounts.length === 0) {
+            console.log('Please add address to metamask');
+        } else {
+            currentAccount = accounts[0];
+            document.querySelector('input[name="address"]').value = currentAccount;
+        }
+    }
+
+    function connect() {
+        if (typeof window.ethereum === 'undefined') {
+            console.error("Please use a web3 browser");
+        } else {
+            window.ethereum
+                .request({method: 'eth_requestAccounts'})
+                .then(handleAccountsChanged)
+        }
+    }
+
+    window.addEventListener('load', function () {
+        connect();
+    });
+
+</script>
 <div class="container">
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4 rounded-circle" src="{% static 'img/logo.jpg' %}"
              alt="" width="72" height="72">
         <h2>Vov's free faucet Ropsten test net</h2>
         <p class="lead">Min: 0,0001 Eth, Max: 10 Eth, Only 1 per 15 min.</p>
-        <p class="lead"><a href="https://ropsten.etherscan.io/address/0xb6faad53675629866dcb7ce6d12e73576effb1dd">0xb6faad53675629866dcb7ce6d12e73576effb1dd</a>: {{ faucet_balance }} Eth</p>
+        <p class="lead"><a href="https://ropsten.etherscan.io/address/0xb6faad53675629866dcb7ce6d12e73576effb1dd">0xb6faad53675629866dcb7ce6d12e73576effb1dd</a>: {{ faucet_balance }}
+            Eth</p>
 
     </div>
     {% bootstrap_messages %}
