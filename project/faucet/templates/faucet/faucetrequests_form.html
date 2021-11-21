@@ -12,7 +12,9 @@
         <img class="d-block mx-auto mb-4 rounded-circle" src="{% static 'img/logo.jpg' %}"
              alt="" width="72" height="72">
         <h2>Vov's free faucet Ropsten test net</h2>
-        <p class="lead">Min: 0,0001 Eth, Max: 0,3 Eth, Only 1 per 15 min.</p>
+        <p class="lead">Min: 0,0001 Eth, Max: 10 Eth, Only 1 per 15 min.</p>
+        <p class="lead"><a href="https://ropsten.etherscan.io/address/0xb6faad53675629866dcb7ce6d12e73576effb1dd">0xb6faad53675629866dcb7ce6d12e73576effb1dd</a>: {{ faucet_balance }} Eth</p>
+
     </div>
     {% bootstrap_messages %}
     <div class="row">
@@ -23,19 +25,19 @@
 
             <form method="post" class="form">
                 {% csrf_token %}
-             <fieldset
-                     {% if service_status == False %}
-                     disabled="disabled"
-                     {% endif %}
-             >
-                {% bootstrap_form form layout='inline' %}
+                <fieldset
+                        {% if service_status == False %}
+                            disabled="disabled"
+                        {% endif %}
+                >
+                    {% bootstrap_form form layout='inline' %}
 
-                {% buttons %}
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                {% endbuttons %}
-             </fieldset>
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    {% endbuttons %}
+                </fieldset>
             </form>
         </div>
         <div class="col-md-6 order-md-2 mb-4">
