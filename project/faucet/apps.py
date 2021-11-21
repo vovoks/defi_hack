@@ -11,8 +11,7 @@ def init_wallet():
 
     try:
         web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
-        acc_obj = web3.eth.accounts[eth_acc_id]
-        web3.personal.unlockAccount(acc_obj, eth_pwd)
+        web3.geth.personal.unlock_account(web3.eth.coinbase, eth_pwd)
         return web3
     except requests.exceptions.ConnectionError:
         return "Fail"
@@ -23,7 +22,7 @@ class FaucetConfig(AppConfig):
     name = 'faucet'
 
     def ready(self):
-        self.web3 = "" #init_wallet()
-        #import ui.signals
+        self.web3 = init_wallet()
+        import faucet.signals
 
 

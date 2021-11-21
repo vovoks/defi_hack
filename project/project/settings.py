@@ -128,6 +128,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'me
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FAUCET_TIMEOUT_SEC = 900
+
 for path in [BASE_DIR, HOME_DIR]:
     file = os.path.join(path, 'local_settings.py')
     if os.path.isfile(file):
