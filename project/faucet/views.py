@@ -42,19 +42,22 @@ class FaucetRequestsView(SuccessMessageMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        address_list = FaucetRequests.objects.filter(address=form.data['address']).order_by('-time')
-        if address_list:
-            calculate_timeout = now() - address_list[0].time
-            if calculate_timeout.seconds < settings.DEFAULT_FAUCET_TIMEOUT_SEC:
-                wait_time = settings.DEFAULT_FAUCET_TIMEOUT_SEC - calculate_timeout.seconds
-                form.add_error(None, "Please, wait {} sec.".format(wait_time))
+        if 0.0001 <= float(form.data['value'].replace(",", ".")) <= 10:
+            address_list = FaucetRequests.objects.filter(address=form.data['address']).order_by('-time')
+            if address_list:
+                calculate_timeout = now() - address_list[0].time
+                if calculate_timeout.seconds < settings.DEFAULT_FAUCET_TIMEOUT_SEC:
+                    wait_time = settings.DEFAULT_FAUCET_TIMEOUT_SEC - calculate_timeout.seconds
+                    form.add_error(None, "Please, wait {} sec.".format(wait_time))
+                    return self.form_invalid(form)
+            try:
+                web3 = apps.get_app_config('faucet').web3
+                web3.eth.get_balance(form.data['address'])
+            except:
+                form.add_error(None, "Incorrect address format: {}".format(form.data['address']))
                 return self.form_invalid(form)
-
-        try:
-            web3 = apps.get_app_config('faucet').web3
-            web3.eth.get_balance(form.data['address'])
-        except:
-            form.add_error(None, "Incorrect address format: {}".format(form.data['address']))
+        else:
+            form.add_error(None, "Incorrect value, value must be 0,0001 - 10 Eth")
             return self.form_invalid(form)
 
         return super().form_valid(form)
